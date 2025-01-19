@@ -1,12 +1,13 @@
-import React, { ChangeEvent, useState } from "react";
-import { Button, Form, Input, Segment, TextArea } from "semantic-ui-react";
+import { ChangeEvent, useState } from "react";
+import { Button, Form, Segment, TextArea } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 
 interface Props  {
     closeForm: () => void;
     activity : Activity | undefined;
+    createOrEdit: (activity: Activity) => void;
 } 
-export default function ActivityForm({activity:selectedActivty, closeForm}: Props) {
+export default function ActivityForm({activity:selectedActivty, closeForm, createOrEdit}: Props) {
     const initialState = selectedActivty ?? {
         id:'',
         title:'',
@@ -18,7 +19,7 @@ export default function ActivityForm({activity:selectedActivty, closeForm}: Prop
     }
     const  [activity, setActivity] = useState(initialState);
     function handleSubmit() {
-        console.log(activity);
+        createOrEdit(activity)
     }
     function handleInputChange(event:ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) {
         const {name, value} = event.target;
