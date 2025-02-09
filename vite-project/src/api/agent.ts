@@ -1,19 +1,56 @@
-import axios, { Axios, AxiosResponse } from 'axios';
+import axios, { Axios, AxiosError, AxiosResponse } from 'axios';
 import { Activity } from '../app/models/activity';
+import { toast } from 'react-toastify';
+import { router } from '../app/router/Routes';
+import { store } from '../app/stores/store';
+import { ServerError } from '../app/models/serverError';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
         setTimeout(resolve, delay)
     })
 }
-axios.interceptors.response.use(response => {
+axios.interceptors.response.use(async response => {
     return sleep(1000).then(() => {
         return response;
-    }).catch(error => {
-        console.log(error)
-        return Promise.reject(error)
-    });
+    })
+}, (error: AxiosError) => {
+    const {data, status, config} = error.response!;
+    switch (status) {
+        case 400:
+            if (config.method === 'get' && (data as any).errors.hasOwnProperty('id')) {
+                router.navigate('/not-found');
+            }
+            if ((data as any).errors) {
+                const modalStateErrors = [];
+                for (const key in (data as any).errors) {
+                    if ((data as any).errors[key]) {
+                        modalStateErrors.push((data as any).errors[key]);
+                    }
+                }
+                throw modalStateErrors.flat();
+            }
+            if(config.method === 'post' && (data as any).errors) {
+                toast.error('validation errors');
+            }
+            else{
+                toast.error(data as string);
+            }
+            break;
+        case 401:
+            toast.error('unauthorised');
+            break;
+        case 404:
+            router.navigate('/not-found');
+            break;
+        case 500:
+            store.commonStore.setServerError(data as ServerError);
+            router.navigate('/server-error');
+            break;
+    }
+    return Promise.reject(error);
 });
+
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 const responseBody = <T>(response: AxiosResponse  <T> ) => response.data;
