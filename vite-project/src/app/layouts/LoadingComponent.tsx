@@ -6,6 +6,7 @@ interface Props {
     content?: string;
 
 }
+
 const LoadingComponent: React.FC<Props> = ({ content = 'Loading...' }: Props) => {
     return (
         <Dimmer active inverted>

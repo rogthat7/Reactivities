@@ -6,7 +6,7 @@ interface Props {
     activity: Activity;
 }
 
-export default function ActivityListItem({ activity }: Props) {
+export default function ActivityListItem({ activity }: Props = { activity: {} as Activity }) {
     return (
         <Segment.Group>
             <Segment>
