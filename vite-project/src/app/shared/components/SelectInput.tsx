@@ -1,7 +1,7 @@
-import { FormControl, FormHelperText, InputLabel, Select, TextField } from "@mui/material";
+import { FormControl, FormHelperText, InputLabel, Select,MenuItem } from "@mui/material";
 import { SelectInputProps } from "@mui/material/Select/SelectInput";
 import { FieldValues, useController, UseControllerProps } from "react-hook-form";
-import { MenuItem } from "semantic-ui-react";
+
 
 type Props<T extends FieldValues> = {
     items : {text:string, value: string}[];
@@ -14,7 +14,7 @@ export default function SelectInput<T extends FieldValues>(props: Props<T>) {
     <FormControl fullWidth error={!!fieldState.error}>
         <InputLabel>{props.label}</InputLabel>
         <Select 
-            value={field.value|| ''}
+            value={field.value || ''}
             label={props.label}
             onChange={field.onChange}
         >
@@ -24,7 +24,7 @@ export default function SelectInput<T extends FieldValues>(props: Props<T>) {
                 </MenuItem>
             ))}
         </Select>
-        <FormHelperText error={!!fieldState.error}>{fieldState.error?.message}</FormHelperText>
+        <FormHelperText>{fieldState.error?.message}</FormHelperText>
     </FormControl>
   );
 }

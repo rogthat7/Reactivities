@@ -4,12 +4,14 @@ import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layouts/LoadingComponent";
 import { FieldValues, useForm } from "react-hook-form";
-import {Box, Button, Paper, TextField, Typography} from '@mui/material';
+import {Box, Button, Paper,  Typography} from '@mui/material';
 import { ActivitySchema, activitySchema } from "../../../lib/schemas/activitySchema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import TextInput from "../../../app/shared/components/TextInput";
 import SelectInput from "../../../app/shared/components/SelectInput";
 import { categoryOptions } from "./categoryOptions";
+import DateTimeInput from "../../../app/shared/components/DateTimeInput";
+import LocationInput from "../../../app/shared/components/LocationInput";
 
 export default observer (function ActivityForm() {
     const {register, reset,control, handleSubmit} = useForm<ActivitySchema>({
@@ -59,17 +61,13 @@ export default observer (function ActivityForm() {
                 <TextInput label='Title' value={activity.title} control={control} name="title"/>
                 <TextInput label='Description' multiline rows={3} value={activity.description} control={control} name="description" />
                 <SelectInput 
-                items={categoryOptions} 
-                label='Category' 
-                control={control} 
-                name="category"/>
-                <TextInput type="date" label='Date' control={control} name="date" 
-                    defaultValue={activity?.date  
-                        ? new Date(activity.date).toISOString().split('T')[0] 
-                        : new Date().toISOString().split('T')[0]} 
+                    items={categoryOptions} 
+                    label='Category' 
+                    control={control} 
+                    name="category"/>
+                <DateTimeInput label='Date' control={control} name="date" 
                 />
-                <TextInput label='City' value={activity.city} control={control} name="city" />
-                <TextInput label='Venue' value={activity.venue} control={control} name="venue" />
+                <LocationInput control={control} name="location" label="Enter the Location"/>
                 <Box display='flex' justifyContent='space-between' gap={3}>
                     <Button 
                         color="success" 
