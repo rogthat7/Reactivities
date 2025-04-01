@@ -34,7 +34,7 @@ export default function ActivityListItem({ activity }: Props = { activity: {} as
             </Segment>
             <Segment>
                 <span>
-                    <Icon name='clock' /> {activity.date}
+                    <Icon name='clock' /> {activity.date.toString()}
                     <Icon name='marker' /> {activity.venue}
                 </span>
             </Segment>

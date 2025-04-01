@@ -8,7 +8,7 @@ export default function DateTimeInput<T extends FieldValues>(props: Props<T>) {
     return (
         <DateTimePicker
             {...props}
-            value={field.value ? new Date(field.value) : null}
+            value={props.value ? new Date(props.value) : null}
             onChange={value => {
                 field.onChange(value)
             }

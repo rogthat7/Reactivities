@@ -34,7 +34,7 @@ export default observer (function ActivityDetailedHeader({activity}: Props) {
                                     content={activity.title}
                                     style={{color: 'white'}}
                                 />
-                                <p>{activity.date}</p>
+                                <p>{activity.date.toString()}</p>
                                 <p>
                                     Hosted by <strong>Bob</strong>
                                 </p>

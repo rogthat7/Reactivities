@@ -16,8 +16,7 @@ export const activitySchema = z.object({
         venue: requiredString('Venue'), // z.string() is a string type
         latitude: z.coerce.number(), // z.number() is a number type
         longitude: z.coerce.number(), // z.number() is a number type
-    }), // z.string() is a string type
-    venue: requiredString('Venue'), // z.string() is a string type
+    }), 
 });
 
 export type ActivitySchema = z.infer<typeof activitySchema>; // z.infer() is a type inference function
