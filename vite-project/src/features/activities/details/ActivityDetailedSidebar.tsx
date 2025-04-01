@@ -1,60 +1,57 @@
-import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import { observer } from 'mobx-react-lite'
+import { Paper, Typography, List, ListItem, Chip, ListItemAvatar, Avatar, ListItemText, Grid } from "@mui/material";
 
-export default observer(function ActivityDetailedSidebar () {
+export default function ActivityDetailsSidebar() {
+    const following = true;
+    const isHost = true;
     return (
         <>
-            <Segment
-                textAlign='center'
-                style={{ border: 'none' }}
-                attached='top'
-                secondary
-                inverted
-                color='teal'
+            <Paper
+                sx={{
+                    textAlign: 'center',
+                    border: 'none',
+                    backgroundColor: 'primary.main',
+                    color: 'white',
+                    p: 2,
+                }}
             >
-                3 People Going
-            </Segment>
-            <Segment attached>
-                <List relaxed divided>
-                    <Item style={{ position: 'relative' }}>
-                        <Label
-                            style={{ position: 'absolute' }}
-                            color='orange'
-                            ribbon='right'
-                        >
-                            Host
-                        </Label>
-                        <Image size='tiny' src={'/assets/user.png'} />
-                        <Item.Content verticalAlign='middle'>
-                            <Item.Header as='h3'>
-                                <Link to={`#`}>Bob</Link>
-                            </Item.Header>
-                            <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
-                        </Item.Content>
-                    </Item>
-
-                    <Item style={{ position: 'relative' }}>
-                        <Image size='tiny' src={'/assets/user.png'} />
-                        <Item.Content verticalAlign='middle'>
-                            <Item.Header as='h3'>
-                                <Link to={`#`}>Tom</Link>
-                            </Item.Header>
-                            <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
-                        </Item.Content>
-                    </Item>
-
-                    <Item style={{ position: 'relative' }}>
-                        <Image size='tiny' src={'/assets/user.png'} />
-                        <Item.Content verticalAlign='middle'>
-                            <Item.Header as='h3'>
-                                <Link to={`#`}>Sally</Link>
-                            </Item.Header>
-                        </Item.Content>
-                    </Item>
-                </List>
-            </Segment>
+                <Typography variant="h6">
+                    2 people going
+                </Typography>
+            </Paper>
+            <Paper sx={{ padding: 2 }}>
+                <Grid container alignItems="center">
+                    <Grid size={8}>
+                        <List sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <ListItem>
+                                <ListItemAvatar>
+                                    <Avatar
+                                        alt={'attendee name'}
+                                        src={'/assets/user.png'}
+                                    />
+                                </ListItemAvatar>
+                                <ListItemText>
+                                    <Typography variant="h6">Bob</Typography>
+                                </ListItemText>
+                            </ListItem>
+                        </List>
+                    </Grid>
+                    <Grid size={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1 }}>
+                        {isHost && (
+                            <Chip
+                                label="Host"
+                                color="warning"
+                                variant='filled'
+                                sx={{borderRadius: 2}}
+                            />
+                        )}
+                        {following && (
+                            <Typography variant="body2" color="orange">
+                                Following
+                            </Typography>
+                        )}
+                    </Grid>
+                </Grid>
+            </Paper>
         </>
-
-    )
-})
+    );
+}
