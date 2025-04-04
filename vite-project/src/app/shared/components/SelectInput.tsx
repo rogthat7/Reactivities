@@ -14,7 +14,7 @@ export default function SelectInput<T extends FieldValues>(props: Props<T>) {
     <FormControl fullWidth error={!!fieldState.error}>
         <InputLabel>{props.label}</InputLabel>
         <Select 
-            value={props.value || ''}
+            value={field.value || ''}
             label={props.label}
             onChange={field.onChange}
         >
