@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
-import { Button, Card, CardContent, CardDescription, CardHeader, CardMeta, Icon, Image } from "semantic-ui-react";
+
+import {  Card, Image } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
+import { Button, ButtonGroup } from "@mui/material";
 
 interface Props {
     activity : Activity;
@@ -21,10 +22,10 @@ export default function ActivityDetails({activity,cancelSelectActivity, openForm
                 </Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <Button.Group widths='2'>
-                    <Button onClick={()=>openForm(activity.id)} basic color="blue" content='Edit'/>
-                    <Button onClick={cancelSelectActivity} basic color="grey" content='Cancel'/>
-                </Button.Group>
+                <ButtonGroup>
+                    <Button onClick={()=>openForm(activity.id)} color="primary">Edit</Button>
+                    <Button onClick={cancelSelectActivity} color="inherit">Cancel</Button>
+                </ButtonGroup>
             </Card.Content>
         </Card>
     )
