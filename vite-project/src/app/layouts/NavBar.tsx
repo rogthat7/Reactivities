@@ -9,7 +9,7 @@ export default function NavBar() {
                     <Toolbar variant="dense" sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                             <MenuItem component={NavLink} to="/" sx={{ display: 'flex', alignItems: 'center', textTransform: 'uppercase', fontSize: '1.2rem', fontWeight: 'bold' }}>
-                                <img src="assets/logo.png" alt="Logo" style={{ width: '50px', height: '50px', marginRight: '1rem' }} />
+                                <img src="/assets/logo.png" alt="Logo" style={{ width: '50px', height: '50px', marginRight: '1rem' }} />
                                 <Typography variant="h4" fontWeight='bold' style={{ color: '#fff' }}>Reactivities</Typography>
                             </MenuItem>
                         </Box>
