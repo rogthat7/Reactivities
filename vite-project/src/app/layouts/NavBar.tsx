@@ -1,21 +1,33 @@
-import { Button, Container, Menu } from "semantic-ui-react";
-interface Props {
-    openForm : ()=>void
-}
-export default function NavBar({openForm}:Props){
+import { AppBar, Box, Container, MenuItem, Toolbar, Typography } from "@mui/material";
+import { NavLink } from "react-router";
+import MenuItemLink from "../shared/components/MenuItemLink";
+export default function NavBar() {
     return (
-        <Menu inverted fixed="top">
-            <Container>
-                <Menu.Item header>
-                    <img src="/assets/logo.png" alt="logo" style={{marginRight:'10px'}}/>
-                    Reactivities
-                </Menu.Item>
-                <Menu.Item name="Activities">
-                </Menu.Item>
-                <Menu.Item>
-                    <Button onClick={openForm} positive content='Create Activity'/>
-                </Menu.Item>
-            </Container>
-        </Menu>
+        <Box sx={{ display: 'flex' }}>
+            <AppBar position="static" sx={{ backgroundImage: 'linear-gradient(135deg, #182a73 0%, #218aae 69%, #20a7ac 89%)' }}>
+                <Container maxWidth="lg" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Toolbar variant="dense" sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                            <MenuItem component={NavLink} to="/" sx={{ display: 'flex', alignItems: 'center', textTransform: 'uppercase', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                                <img src="assets/logo.png" alt="Logo" style={{ width: '50px', height: '50px', marginRight: '1rem' }} />
+                                <Typography variant="h4" fontWeight='bold' style={{ color: '#fff' }}>Reactivities</Typography>
+                            </MenuItem>
+                        </Box>
+                        <Box sx={{ display: 'flex', gap: 2 }}>
+                            <MenuItemLink to='/activities'>
+                                <Typography fontWeight='bold' style={{ color: '#fff' }}>Activities</Typography>
+                            </MenuItemLink>
+                            <MenuItemLink to='/createActivity' >
+                                <Typography fontWeight='bold' style={{ color: '#fff' }}>Create Activity</Typography>
+                            </MenuItemLink>
+                        </Box>
+                        <MenuItem component={NavLink} to="/" sx={{ display: 'flex', gap: 2 }}>
+                            User Menu
+                        </MenuItem>
+
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </Box>
     )
 }

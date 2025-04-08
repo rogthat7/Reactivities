@@ -1,18 +1,17 @@
-import { Activity } from "../../../app/models/activity";
+import { Typography } from "@mui/material";
+import { useActivities } from "../../../app/lib/hooks/useActivities";
 import ActivityCard from "./ActivityCard";
 
-interface Props {
-    activities: Activity[];
-    selectActivity: (id: string) => void;
-}
-export default function ActivityList({ activities, selectActivity }: Props) {
+
+export default function ActivityList() {
+    const {activities, isLoading } = useActivities();
+    if(!activities || isLoading) return <Typography>Loading...</Typography>
     return (
         <div>
-                {activities.map(activity => (
+                {activities?.map(activity => (
                     <ActivityCard 
                     key={activity.id} 
-                    activity={activity} 
-                    selectActivity={selectActivity} />
+                    activity={activity}/>
                 ))}
         </div>
     )

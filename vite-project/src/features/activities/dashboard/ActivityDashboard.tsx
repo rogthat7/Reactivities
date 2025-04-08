@@ -1,48 +1,15 @@
-import { Grid } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+import { Grid } from "@mui/material";
 import ActivityList from "./ActivityList";
-import ActivityDetails from "../details/ActivityDetails";
-import ActivityForm from "../form/ActivityForm";
 
-interface Props {
-    activities: Activity[];
-    selectedActivity: Activity | undefined;
-    selectActivity: (id: string) => void;
-    cancelSelectActivity: () => void;
-    editMode: boolean;
-    openForm: (id: string) => void;
-    closeForm: () => void;
-}
-export default function ActivityDashboard({ activities
-                                            ,selectedActivity
-                                            ,selectActivity
-                                            ,cancelSelectActivity
-                                            ,openForm
-                                            ,closeForm
-                                            ,editMode 
-                                        }: Props) {
+export default function ActivityDashboard() {
     return (
-        <Grid>
-            <Grid.Column width='10'>
-                <ActivityList 
-                activities={activities} 
-                selectActivity={selectActivity} 
-                />
-            </Grid.Column>
-            <Grid.Column width='6'>
-                {
-                    selectedActivity && !editMode /*!editMode adding this will replace the details componant */ 
-                    && <ActivityDetails
-                        selectedActivity={selectedActivity}
-                        cancelSelectActivity={cancelSelectActivity}
-                        openForm={openForm}
-                    />
-                }
-                {
-                    editMode &&
-                    <ActivityForm closeForm={closeForm} activity={selectedActivity} />
-                }
-            </Grid.Column>
+        <Grid container spacing={2} sx={{ marginTop: '2rem' }}>
+            <Grid size={7}>
+                <ActivityList/>
+            </Grid>
+            <Grid size={5}>
+                Activities Filters Go here
+            </Grid>
         </Grid>
     )
 }
