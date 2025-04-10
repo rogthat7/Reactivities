@@ -1,4 +1,5 @@
 import axios from "axios";
+import { store } from "../../stores/store";
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const agent = axios.create({
@@ -12,6 +13,11 @@ const agent = axios.create({
         return status >= 200 && status < 300; // default
     }
 });
+agent.interceptors.request.use(
+     config => {
+        store.UIStore.isBusy(); // Start loading
+        return config;
+    })
 agent.interceptors.response.use(
     async response => {
         try {
@@ -35,12 +41,15 @@ agent.interceptors.response.use(
                 console.log('Server Error', response.data);
                 return Promise.reject(response.data);
             }
+            return response.data;
         }
         catch (error) {
             console.log('Error', error);
             return Promise.reject(error);
         }
-        return response.data;
+        finally {
+            store.UIStore.isIdle();
+        }
     }
     ,error => {
         console.log('Error', error);
