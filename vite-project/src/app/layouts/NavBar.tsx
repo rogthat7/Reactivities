@@ -29,6 +29,9 @@ export default function NavBar() {
                             <MenuItemLink to='/counter' >
                                 <Typography fontWeight='bold' style={{ color: '#fff' }}>Counter</Typography>
                             </MenuItemLink>
+                            <MenuItemLink to='/errors' >
+                                <Typography fontWeight='bold' style={{ color: '#fff' }}>Errors</Typography>
+                            </MenuItemLink>
                         </Box>
                         <MenuItem component={NavLink} to="/" sx={{ display: 'flex', gap: 2 }}>
                             User Menu

@@ -17,30 +17,26 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            var res =  await Mediator.Send(new Details.Query{Id = id});
-            return Ok(res);
+            return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateActivity(Activity activity)
+        public async Task<ActionResult<string>> CreateActivity(CreateActivityDto activityDto)
         {
-            await Mediator.Send(new Create.Command{Activity = activity});
-            return Ok();
+           return HandleResult(await Mediator.Send(new CreateActivity.Command{ActivityDto = activityDto})); 
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditActivity(Guid id, Activity activity)
+        public async Task<IActionResult> EditActivity(Guid id, EditActivityDto activity)
         {
             activity.Id = id;
-            await Mediator.Send(new Edit.Command{Activity = activity});
-            return Ok();
+            return HandleResult(await Mediator.Send(new Edit.Command{ActivityDto = activity}));
         }
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(Guid id)
         {
-            await Mediator.Send(new Delete.Command{Id = id});
-            return Ok();
+           return HandleResult (await Mediator.Send(new Delete.Command{Id = id}));
         }
     }
 }

@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Middleware;
 using Application.Activities;
+using Application.Activities.Validators;
 using Application.Core;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -24,8 +27,15 @@ namespace API.Extensions
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
                 });
             });
-            services.AddMediatR(cfg=>cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
+            services.AddMediatR(cfg=>
+                {
+                    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                    cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly);
+                }
+            );
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
+            services.AddTransient<ExceptionMiddleware>();
             return services;
         }
     }
