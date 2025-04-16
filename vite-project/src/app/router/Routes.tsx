@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <div>404</div>,
+    // errorElement: <div>404</div>,
     children: [
       {path: "", element: <HomePage />},
       {path: "activities", element: <ActivityDashboard />},
