@@ -6,7 +6,9 @@ using API.Middleware;
 using Application.Activities;
 using Application.Activities.Validators;
 using Application.Core;
+using Domain;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -24,7 +26,9 @@ namespace API.Extensions
             services.AddSwaggerGen();
             services.AddCors(opt=>{
                 opt.AddPolicy("CorsPolicy", policy=>{
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                    policy.AllowAnyHeader()
+                    .AllowCredentials()
+                    .AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000");
                 });
             });
             services.AddMediatR(cfg=>
@@ -36,6 +40,11 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
             services.AddTransient<ExceptionMiddleware>();
+            services.AddIdentityApiEndpoints<User>(opt => {
+                opt.User.RequireUniqueEmail = true; 
+            })
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<DataContext>();
             return services;
         }
     }
