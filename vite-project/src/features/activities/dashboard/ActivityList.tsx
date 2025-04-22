@@ -1,11 +1,14 @@
 import { Typography } from "@mui/material";
-import { useActivities } from "../../../app/lib/hooks/useActivities";
 import ActivityCard from "./ActivityCard";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 
 export default function ActivityList() {
     const {activities, isLoading } = useActivities();
-    if(!activities || isLoading) return <Typography>Loading...</Typography>
+    if (!activities) {
+        return <Typography>No activities found.</Typography>
+    }
+    if(isLoading) return <Typography>Loading...</Typography>
     return (
         <div>
                 {activities?.map(activity => (

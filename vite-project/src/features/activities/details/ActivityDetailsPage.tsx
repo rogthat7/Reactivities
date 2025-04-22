@@ -1,14 +1,13 @@
 
 import { Grid, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
-import { useActivities } from "../../../app/lib/hooks/useActivities";
 import ActivityDetailsHeader from "./ActivityDetailsHeader";
 import ActivityDetailsInfo from "./ActivityDetailsInfo";
 import ActivityDetailsChat from "./ActivityDetailsChat";
 import ActivityDetailsSidebar from "./ActivityDetailsSidebar";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 export default function ActivityDetailsPage() {
-    const navigate = useNavigate();
     const {id} = useParams<{id: string}>();
     const {activity, isLoadingActivity } = useActivities(id);
     if(isLoadingActivity) return <Typography variant="h5" color="primary">Loading...</Typography>;

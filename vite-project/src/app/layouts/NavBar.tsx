@@ -2,8 +2,11 @@ import { AppBar, Box, Container, LinearProgress, MenuItem, Toolbar, Typography }
 import { NavLink } from "react-router";
 import MenuItemLink from "../shared/components/MenuItemLink";
 import { Observer } from "mobx-react-lite";
-import { useStore } from "../lib/hooks/useStore";
+import { useStore } from "../../lib/hooks/useStore";
+import { useAccount } from "../../lib/hooks/useAccount";
+import UserMenu from "./UserMenu";
 export default function NavBar() {
+    const {currentUser} = useAccount();
     const {UIStore} = useStore(); // Create an instance of UIStore
     return (
         <Box sx={{ display: 'flex' }}>
@@ -23,9 +26,6 @@ export default function NavBar() {
                             <MenuItemLink to='/activities'>
                                 <Typography fontWeight='bold' style={{ color: '#fff' }}>Activities</Typography>
                             </MenuItemLink>
-                            <MenuItemLink to='/createActivity' >
-                                <Typography fontWeight='bold' style={{ color: '#fff' }}>Create Activity</Typography>
-                            </MenuItemLink>
                             <MenuItemLink to='/counter' >
                                 <Typography fontWeight='bold' style={{ color: '#fff' }}>Counter</Typography>
                             </MenuItemLink>
@@ -33,9 +33,16 @@ export default function NavBar() {
                                 <Typography fontWeight='bold' style={{ color: '#fff' }}>Errors</Typography>
                             </MenuItemLink>
                         </Box>
-                        <MenuItem component={NavLink} to="/" sx={{ display: 'flex', gap: 2 }}>
-                            User Menu
-                        </MenuItem>
+                        <Box display={'flex'} alignItems={'center'}>
+                            {currentUser ? (
+                                <UserMenu/>
+                            ):(
+                                <>
+                                <MenuItemLink to="/login"><Typography fontWeight='bold' style={{ color: '#fff' }}>Login</Typography></MenuItemLink>
+                                <MenuItemLink to="/register"><Typography fontWeight='bold' style={{ color: '#fff' }}>Register</Typography></MenuItemLink>
+                                </>
+                            )}
+                        </Box>
 
                     </Toolbar>
                 </Container>

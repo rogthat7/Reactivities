@@ -7,11 +7,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider } from "react-router";
 import { router } from "./app/router/Routes.tsx";
-import { store } from "./app/lib/stores/store.ts";
-import { storeContext } from "./app/lib/stores/store.ts";
 import { ToastContainer } from "react-toastify";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
+import { store, storeContext } from "./lib/stores/store.ts";
 
 const queryClient = new QueryClient();
 

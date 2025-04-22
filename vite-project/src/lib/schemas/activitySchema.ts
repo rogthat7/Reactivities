@@ -1,8 +1,6 @@
 import { z } from "zod";
+import { requiredString } from "../util/util";
 
-const requiredString = (fieldName: string) => z.string({required_error:`${fieldName} is Required`}).min(3, {
-  message: `${fieldName} is requires minimum 3 characters`
-});
 export const activitySchema = z.object({
   title: requiredString('Title'),
   date: z.coerce.date({

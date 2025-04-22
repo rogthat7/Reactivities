@@ -1,9 +1,7 @@
 import {  useEffect } from "react";
-import { Box, Button, ButtonGroup, Paper, TextField, Typography } from "@mui/material";
-import { useActivities } from "../../../app/lib/hooks/useActivities";
+import { Box, Button, ButtonGroup, Paper, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
-import { activitySchema, ActivitySchema } from "../../../app/lib/schemas/activitySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextInput from "../../../app/shared/components/TextInput";
 import SelectInput from "../../../app/shared/components/SelectInput";
@@ -11,13 +9,17 @@ import { categoryOptions } from "./categoryOptions";
 import DateTimeInput from "../../../app/shared/components/DateTimeInput";
 import LocationInput from "../../../app/shared/components/LocationInput";
 import { v4 as uuidv4 } from 'uuid';
+import { activitySchema, ActivitySchema } from "../../../lib/schemas/activitySchema";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 export default function ActivityForm() {
 
     const {id} = useParams<{id: string}>();
     const { updateActivity, createActivity, activity, isLoadingActivity } = useActivities(id);
     const navigate = useNavigate();
-    
+    if (isLoadingActivity) {
+        <Typography>Loading Activity</Typography>
+    }
     const {register, reset, handleSubmit,control} = useForm<ActivitySchema>({
         resolver : zodResolver(activitySchema),
         mode : "onTouched"

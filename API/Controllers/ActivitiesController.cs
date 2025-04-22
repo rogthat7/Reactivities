@@ -9,7 +9,6 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ActivitiesController : BaseApiController
     {
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {

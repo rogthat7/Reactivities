@@ -4,8 +4,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Activity } from "../../../app/models/activity"
 import { Link } from "react-router";
 import { Place } from "@mui/icons-material";
-import { format } from "date-fns";
-import { formatDate } from "../../../app/lib/util/util";
+import { formatDate } from "../../../lib/util/util";
 
 type Props = {
   activity: Activity,
@@ -41,7 +40,7 @@ export default function ActivityCard({ activity }: Props) {
           <Box display='flex' alignItems='center' gap={0}>
             <AccessTimeIcon sx={{ color: 'text.primary', mr: 1, display: 'flex' }} />
             <Typography variant="body2" color="text.primary" noWrap>
-              {formatDate(activity.date)}
+              {activity.date ? formatDate(activity.date) : 'Date not available'}
             </Typography>
           </Box>
           <Place sx={{ ml: 3, mr: 1 }} />

@@ -1,9 +1,9 @@
 import { CalendarToday, Info, Place } from "@mui/icons-material";
 import { Box, Button, Divider, Grid, Paper, Typography } from "@mui/material";
 import { Activity } from "../../../app/models/activity";
-import { formatDate } from "../../../app/lib/util/util";
 import { useState } from "react";
 import MapComponent from "../../../app/shared/components/MapComponent";
+import { formatDate } from "../../../lib/util/util";
 
 type Props = {
   activity?: Activity; // Replace with the actual type of your activity object
