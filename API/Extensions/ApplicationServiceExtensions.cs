@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Middleware;
 using Application.Activities;
 using Application.Activities.Validators;
@@ -9,7 +5,8 @@ using Application.Core;
 using Application.Interfaces;
 using Domain;
 using FluentValidation;
-using Infrastructure;
+using Infrastructure.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -48,6 +45,12 @@ namespace API.Extensions
             })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<DataContext>();
+            services.AddAuthorization(opt => {
+                opt.AddPolicy("IsActivityHost", policy => {
+                    policy.Requirements.Add(new IsHostRequirement());
+                });
+            });
+            services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
             return services;
         }
     }

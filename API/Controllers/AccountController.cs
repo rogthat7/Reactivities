@@ -41,7 +41,7 @@ namespace API.Controllers
         {
             if (User.Identity?.IsAuthenticated == false)
             {
-                return NoContent();
+                return NotFound("User not Logged in");
             }
             var user = await signInManager.UserManager.GetUserAsync(User);
 
