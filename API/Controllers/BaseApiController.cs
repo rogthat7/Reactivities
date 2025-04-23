@@ -18,7 +18,7 @@ namespace API.Controllers
         {
             if (result.IsSuccess && result.Data != null)
             {
-                return Ok(result);
+                return Ok(result.Data);
             }
 
             if (result.StatusCode == 404)

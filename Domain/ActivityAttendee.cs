@@ -11,7 +11,7 @@ namespace Domain
         public User User { get; set; }
         public Guid ActivityId { get; set; }
         public Activity Activity { get; set; }
-        public bool Host { get; set; }
+        public bool IsHost { get; set; }
         public DateTime DateJoined { get; set; } = DateTime.UtcNow;
     }
 }

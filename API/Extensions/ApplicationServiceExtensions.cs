@@ -6,8 +6,10 @@ using API.Middleware;
 using Application.Activities;
 using Application.Activities.Validators;
 using Application.Core;
+using Application.Interfaces;
 using Domain;
 using FluentValidation;
+using Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -37,6 +39,7 @@ namespace API.Extensions
                     cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly);
                 }
             );
+            services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
             services.AddTransient<ExceptionMiddleware>();

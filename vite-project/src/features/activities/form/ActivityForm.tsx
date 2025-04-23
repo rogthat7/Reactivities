@@ -47,7 +47,7 @@ export default function ActivityForm() {
                 const newId = uuidv4().toString();
                 createActivity.mutate({ id: newId, ...flatteneData, city: location.city || '' },{
                     onSuccess: (activity ) => {
-                        navigate(`/activities/${activity.data}`)// as our endpoint get activity returns id as data
+                        navigate(`/activities/${activity}`)// as our endpoint get activity returns id as data
                     }
                 })
             }

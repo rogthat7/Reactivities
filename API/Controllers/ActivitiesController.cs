@@ -1,4 +1,5 @@
 using Application.Activities;
+using Application.Activities.DTOs;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace API.Controllers
             return Ok(res);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Activity>> GetActivity(Guid id)
+        public async Task<ActionResult<ActivityDto>> GetActivity(Guid id)
         {
             return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
