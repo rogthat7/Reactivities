@@ -41,15 +41,13 @@ namespace API.Controllers
         {
             if (User.Identity?.IsAuthenticated == false)
             {
-                return NotFound("User not Logged in");
+                return NoContent();
             }
             var user = await signInManager.UserManager.GetUserAsync(User);
-
             if (user == null)
             {
-                return NotFound("User not found");
+                return Unauthorized(new { Message = "User not found" });
             }
-
             return Ok(new
             {
                 user.UserName

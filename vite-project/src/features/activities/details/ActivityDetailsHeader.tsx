@@ -1,25 +1,23 @@
-import { Card, Badge, CardMedia, Box, Typography, Button } from "@mui/material";
+import { Card, CardMedia, Box, Typography, Chip } from "@mui/material";
 import { Link } from "react-router";
-import { Activity } from "../../../app/models/activity";
+import { Activity } from "../../../app/models/Types/activity";
 import { formatDate } from "../../../lib/util/util";
+import { useActivities } from "../../../lib/hooks/useActivities";
+import ThemedButton from "../../../app/shared/components/ThemedButton";
 
 type Props = {
     activity?: Activity; // Replace with the actual type of your activity object
 }
 
 export default function ActivityDetailsHeader( { activity }: Props) {
-    const isCancelled = false;
-    const isHost = true;
-    const isGoing = true;
-    const loading = false;
-
+    const { updateAttendance}= useActivities(activity?.id);
     return (
         <Card sx={{ position: 'relative', mb: 2, backgroundColor: 'transparent', overflow: 'hidden' }}>
-        {isCancelled && (
-            <Badge
-                sx={{ position: 'absolute', left: 40, top: 20, zIndex: 1000 }}
+        {activity?.isCancelled && (
+            <Chip
+                sx={{ position: 'absolute', left: 40, top: 20, zIndex: 1000, borderRadius:1}}
                 color="error"
-                badgeContent="Cancelled"
+                label="Cancelled"
             />
         )}
         <CardMedia
@@ -46,40 +44,41 @@ export default function ActivityDetailsHeader( { activity }: Props) {
                 <Typography variant="h4" sx={{ fontWeight: 'bold' }}>{activity?.title}</Typography>
                 <Typography variant="subtitle1">{activity?.date ? formatDate(activity.date) : 'Date not available'}</Typography>
                 <Typography variant="subtitle2">
-                    Hosted by <Link to={`/profiles/username`} style={{ color: 'white', fontWeight: 'bold' }}>Bob</Link>
+                    Hosted by <Link to={`/profiles/${activity?.hostId}`} style={{ color: 'white', fontWeight: 'bold' }}>{activity?.hostDisplayName}</Link>
                 </Typography>
             </Box>
 
             {/* Buttons aligned to the right */}
             <Box sx={{ display: 'flex', gap: 2 }}>
-                {isHost ? (
+                {activity?.isHost ? (
                     <>
-                        <Button
+                        <ThemedButton
                             variant='contained'
-                            color={isCancelled ? 'success' : 'error'}
-                            onClick={() => { }}
+                            color={activity?.isCancelled ? 'success' : 'error'}
+                            onClick={() => activity?.id && updateAttendance.mutate(activity.id)}
+                            disabled={updateAttendance.isLoading}
                         >
-                            {isCancelled ? 'Re-activate Activity' : 'Cancel Activity'}
-                        </Button>
-                        <Button
+                          <Typography>{activity?.isCancelled ? 'Re-activate Activity' : 'Cancel Activity'}</Typography>  
+                        </ThemedButton>
+                        <ThemedButton
                             variant="contained"
                             color="primary"
                             component={Link}
                             to={`/manage/${activity?.id}`}
-                            disabled={isCancelled}
+                            disabled={activity?.isCancelled}
                         >
-                            Manage Event
-                        </Button>
+                            <Typography color="White">Manage Event</Typography>
+                        </ThemedButton>
                     </>
                 ) : (
-                    <Button
+                    <ThemedButton
                         variant="contained"
-                        color={isGoing ? 'primary' : 'info'}
-                        onClick={() => { }}
-                        disabled={isCancelled || loading}
+                        color={activity?.isGoing ? 'primary' : 'info'}
+                        onClick={() => activity?.id && updateAttendance.mutate(activity.id)}
+                        disabled={updateAttendance.isLoading || activity?.isCancelled}
                     >
-                        {isGoing ? 'Cancel Attendance' : 'Join Activity'}
-                    </Button>
+                        {activity?.isGoing ? 'Cancel Attendance' : 'Join Activity'}
+                    </ThemedButton>
                 )}
             </Box>
         </Box>
