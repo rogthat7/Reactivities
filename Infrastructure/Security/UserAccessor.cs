@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Infrastructure.Security
@@ -23,6 +24,13 @@ namespace Infrastructure.Security
            return await dataContext.Users.FindAsync(GetUserId()) 
             ?? throw new UnauthorizedAccessException("User not found in the database.");
             
+        }
+        public Task<User> GetUserWithPhotosAsync(CancellationToken cancellationToken)
+        {
+            return dataContext.Users
+                .Include(x => x.Photos)
+                .FirstOrDefaultAsync(x => x.Id == GetUserId(), cancellationToken) 
+            ?? throw new UnauthorizedAccessException("User not logged in.");
         }
     }
 }

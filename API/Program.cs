@@ -28,15 +28,16 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1");
+        options.OAuthUseBasicAuthenticationWithAccessCodeGrant(); // Enable basic authentication
+    });
 }
 
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors("CorsPolicy");
 app.UseAuthentication();
-app.UseAuthorization();
-
 app.UseAuthorization();
 
 app.MapControllers();
