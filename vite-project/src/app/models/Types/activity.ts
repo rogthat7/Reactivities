@@ -17,4 +17,5 @@ export interface Activity {
   hostUsername: string;
   hostId: string;
   hostDisplayName: string;
+  hostImageUrl: string;
 }

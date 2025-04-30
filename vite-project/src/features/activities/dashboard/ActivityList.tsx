@@ -14,7 +14,7 @@ export default function ActivityList() {
                 {activities?.map(activity => (
                     <ActivityCard 
                     key={activity.id} 
-                    activity={activity}/>
+                    activity={{ ...activity, hostImageUrl: activity.hostImageUrl ?? '' }}/>
                 ))}
         </div>
     )

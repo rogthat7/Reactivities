@@ -31,9 +31,7 @@ namespace Application.Queries
                 var photos = await _dataContext.Photos
                     .Where(x => x.UserId == request.UserId)
                     .ToListAsync(cancellationToken: cancellationToken);
-
-                if (photos == null || photos.Count == 0) return Result<List<Photo>>.Failure("No photos found", StatusCodes.Status404NotFound);
-
+                
                 return Result<List<Photo>>.Success(photos);
             }
         }
