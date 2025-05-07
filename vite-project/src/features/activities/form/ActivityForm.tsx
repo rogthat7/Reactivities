@@ -20,7 +20,7 @@ export default function ActivityForm() {
     if (isLoadingActivity) {
         <Typography>Loading Activity</Typography>
     }
-    const {register, reset, handleSubmit,control} = useForm<ActivitySchema>({
+    const {reset, handleSubmit,control} = useForm<ActivitySchema>({
         resolver : zodResolver(activitySchema),
         mode : "onTouched"
     })

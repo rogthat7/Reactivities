@@ -97,7 +97,33 @@ export const useProfile = (id?: string) => {
                 return photos?.filter((photo) => photo.id !== photoId);
             })
         },
-    })
+    });
+    const editProfile = useMutation({
+        mutationFn: async (profile: Profile) => {
+            await agent.put(`/profiles/${profile.id}/edit-profile`, profile);
+        },
+        onSuccess: async (_, profile) => {
+            queryClient.setQueryData(['profile', id], (data?: Profile) => {
+                if (!data) {
+                    return data;
+                }
+                return {
+                    ...data,
+                    displayName: profile.displayName,
+                    bio: profile.bio
+                };
+            })
+            queryClient.setQueryData(['user'], (data?: User) => {
+                if (!data) {
+                    return data;
+                }
+                return {
+                    ...data,
+                    displayName: profile.displayName,
+                };
+            });
+        },
+    });
     return { profile
         , isLoadingProfile
         , photos
@@ -106,5 +132,6 @@ export const useProfile = (id?: string) => {
         , uploadPhoto  
         , setMainPhoto    
         , deletePhoto
+        , editProfile
     };
 }

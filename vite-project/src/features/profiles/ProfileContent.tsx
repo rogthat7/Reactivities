@@ -34,7 +34,7 @@ export default function ProfileContent() {
         ))}
 
       </Tabs>
-      <Box sx={{flexGrow: 1, padding: 3, tp:0}}>
+      <Box sx={{flexGrow: 0, padding: 3, tp:0, position:'relative', width: '100%'}}>
         {tabContent[value].content}
       </Box>
     </Box>

@@ -1,5 +1,5 @@
 export type Profile ={
-    id: string
+    id: string 
     displayName: string
     username: string
     bio?: string

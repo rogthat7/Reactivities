@@ -41,11 +41,13 @@ export default function ProfileCard({ profile }: Props) {
           sx={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
+            alignItems: "left",
+            textAlign: "left",
+            fullwidth: "100%",
+            justifyContent: "space-between",
           }}
         >
-          <Box display="flex" flexDirection={'column'} gap={1} sx={{ mb: 2 }}>
+          <Box display="flex" flexDirection={'column'} gap={1} sx={{ mb: 1}}>
             <Typography variant="h5">{profile?.displayName}</Typography>
             {profile.bio && (
               <Typography
@@ -54,7 +56,8 @@ export default function ProfileCard({ profile }: Props) {
                   textOverflow: "ellipsis",
                   overflow: "hidden",
                   whiteSpace: "nowrap",
-                  maxWidth: 100,
+                  maxWidth: 250,
+                 
                 }}
               >
                 {profile.bio}

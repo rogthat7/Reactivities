@@ -9,6 +9,12 @@ export default function TextInput <T extends FieldValues>(props : Props<T>) {
         {...field}
         value={field.value || ''}
         fullWidth
+        onChange={(event) => {
+            field.onChange(event.target.value);
+            if (props.onChange) {
+                props.onChange(event);
+            }
+        }}
         variant="outlined"
         error = {!!fieldState.error}
         helperText = {fieldState.error?.message}
