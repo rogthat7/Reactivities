@@ -78,9 +78,6 @@ export default function ProfileCard({ profile }: Props) {
           display="flex"
           gap={2}
           sx={{
-            backgroundColor: "grey.200",
-            py: 3,
-            pl: 3,
             alignItems: "center",
             justifyContent: "start",
           }}

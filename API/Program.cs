@@ -1,5 +1,6 @@
 using API.Extensions;
 using API.Middleware;
+using API.SignalR;
 using Application.Activities;
 using Application.Core;
 using Domain;
@@ -42,6 +43,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>(); //api/login
+app.MapHub<CommentHub>("/comments"); // SignalR hub for comments
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

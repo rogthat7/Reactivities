@@ -61,6 +61,7 @@ namespace API.Extensions
                     .AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000");
                 });
             });
+            services.AddSignalR();
             services.AddMediatR(cfg =>
                 {
                     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
