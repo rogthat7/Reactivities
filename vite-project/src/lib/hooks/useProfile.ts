@@ -5,7 +5,7 @@ import { Photo } from "../../app/models/Types/photo";
 import { useMemo } from "react";
 import { User } from "../types/User";
 
-export const useProfile = (id?: string) => {
+export const useProfile = (id?: string, predicate?:string) => {
     const queryClient = useQueryClient();
     const {data: profile, isLoading: isLoadingProfile} = useQuery({
         queryKey: ['profile', id],
@@ -13,7 +13,7 @@ export const useProfile = (id?: string) => {
             const response = await agent.get<Profile>(`/profiles/${id}`);
             return response.data;
         },
-        enabled: !!id,
+        enabled: !!id && !predicate,
     });
     const {data: photos, isLoading : isLoadingPhoto} = useQuery<Photo[]>({
         queryKey: ['photos', id],
@@ -23,11 +23,41 @@ export const useProfile = (id?: string) => {
         },
         enabled: !!id,
     });
+    const updateFollowing = useMutation({
+        mutationFn: async () => {
+            await agent.post(`/profiles/${id}/follow`);
+        },
+        onSuccess: async () => {
+            queryClient.setQueryData(['profile', id], (data?: Profile) => {
+                queryClient.invalidateQueries({
+                    queryKey : ['followings', id, 'followers']
+                })
+                if (!data || data.followersCount=== undefined) {
+                    return data;
+                }
+                return {
+                    ...data,
+                    isFollowing: !data.isFollowing,
+                    followersCount: data.isFollowing ? data.followersCount - 1 : data.followersCount + 1,
+                };
+            });
+
+            
+        }
+    });
     const isCurrentUser = useMemo(() => {
         return id === queryClient.getQueryData<User>(['user'])?.id;
     }
     , [id, queryClient]);
 
+    const {data: followings, isLoading: loadingFollowings} = useQuery<Profile[]>({
+        queryKey: ['followings', id, predicate],
+        queryFn: async () => {
+            const response = await agent.get<Profile[]>(`/profiles/${id}/follow-list/?predicate=${predicate}`);
+            return response.data;
+        },
+        enabled: !!id && !!predicate,
+    })
     const uploadPhoto = useMutation({
         mutationFn: async (file: Blob) => {
             const formData = new FormData();
@@ -133,5 +163,8 @@ export const useProfile = (id?: string) => {
         , setMainPhoto    
         , deletePhoto
         , editProfile
+        , updateFollowing
+        , followings
+        , loadingFollowings
     };
 }

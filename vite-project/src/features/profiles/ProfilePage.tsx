@@ -13,7 +13,7 @@ export default function ProfilePage() {
   return (
     <Grid>
         <Grid direction={'column'} container sx={{ marginTop: 2 }}>
-           <ProfileHeader profile={profile}/>
+           <ProfileHeader/>
            <ProfileContent/>
         </Grid>
     </Grid>

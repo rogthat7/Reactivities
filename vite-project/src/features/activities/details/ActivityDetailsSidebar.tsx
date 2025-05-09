@@ -16,6 +16,7 @@ type Props = {
 };
 
 export default function ActivityDetailsSidebar({ activity }: Props) {
+
   return (
     <>
       <Paper
@@ -41,14 +42,18 @@ export default function ActivityDetailsSidebar({ activity }: Props) {
                   <ListItemAvatar>
                     <Avatar
                       variant="rounded"
-                      sx={{ width: 75, height: 75, mr: 3 }}
+                      sx={{ width: 75
+                        , height: 75
+                        , mr: 3
+                        
+                      }}
                       alt={attendee.displayName}
                       src={attendee.imageUrl}
                     />
                   </ListItemAvatar>
                   <ListItemText>
                     <Typography variant="h6">{attendee.displayName}</Typography>
-                    {activity?.isGoing && (
+                    {attendee?.isFollowing && (
                       <Typography variant="body2" color="orange">
                         Following
                       </Typography>

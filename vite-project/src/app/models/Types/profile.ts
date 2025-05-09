@@ -4,9 +4,7 @@ export type Profile ={
     username: string
     bio?: string
     imageUrl?: string
-    following: boolean
-    followersCount: number
-    followingCount: number
     isFollowing?: boolean
-    isFollowedBy?: boolean
+    followersCount?: number
+    followingsCount?: number
 } 

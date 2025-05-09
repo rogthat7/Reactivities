@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class CommentEntityAdded : Migration
+    public partial class FollowerEntityAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,8 +34,31 @@ namespace Persistence.Migrations
                         name: "FK_Comments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserFollowings",
+                columns: table => new
+                {
+                    ObserverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TargetId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserFollowings", x => new { x.ObserverId, x.TargetId });
+                    table.ForeignKey(
+                        name: "FK_UserFollowings_AspNetUsers_ObserverId",
+                        column: x => x.ObserverId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_UserFollowings_AspNetUsers_TargetId",
+                        column: x => x.TargetId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -47,6 +70,11 @@ namespace Persistence.Migrations
                 name: "IX_Comments_UserId",
                 table: "Comments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserFollowings_TargetId",
+                table: "UserFollowings",
+                column: "TargetId");
         }
 
         /// <inheritdoc />
@@ -54,6 +82,9 @@ namespace Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "UserFollowings");
         }
     }
 }

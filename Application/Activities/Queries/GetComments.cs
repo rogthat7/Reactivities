@@ -1,5 +1,6 @@
 using Application.Activities.DTOs;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -19,11 +20,15 @@ public class GetComments
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;
+        private readonly IUserAccessor _userAccessor;
 
-        public Handler(DataContext dataContext, IMapper mapper)
+
+        public Handler(DataContext dataContext, IMapper mapper, IUserAccessor userAccessor)
         {
             _dataContext = dataContext;
             _mapper = mapper;
+            _userAccessor = userAccessor;
+
         }
 
         public async Task<Result<List<CommentDto>>> Handle(Query request, CancellationToken cancellationToken)
@@ -32,7 +37,7 @@ public class GetComments
                 .Include(c => c.User)
                 .Where(c => c.ActivityId == request.ActivityId)
                 .OrderByDescending(c => c.CreatedAt)
-                .ProjectTo<CommentDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<CommentDto>(_mapper.ConfigurationProvider, new { currentUserId = _userAccessor.GetUserId() })
                 .ToListAsync(cancellationToken);
 
             return Result<List<CommentDto>>.Success(_mapper.Map<List<CommentDto>>(comments));

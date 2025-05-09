@@ -12,9 +12,9 @@ namespace Persistence
         public static async Task SeedData(DataContext context, UserManager<User> userManager)
         {
             var users = new List<User>(){
-                    new() {DisplayName = "Bob", UserName = "bob@test.com", Email = "bob@test.com" },
-                    new() {DisplayName = "Tom", UserName = "tom@test.com", Email = "tom@test.com" },
-                    new() {DisplayName = "Jane", UserName = "Jane@test.com", Email = "Jane@test.com" }
+                    new() {Id = "bob-id", DisplayName = "Bob", UserName = "bob@test.com", Email = "bob@test.com" },
+                    new() {Id = "tom-id", DisplayName = "Tom", UserName = "tom@test.com", Email = "tom@test.com" },
+                    new() {Id = "jane-id", DisplayName = "Jane", UserName = "Jane@test.com", Email = "Jane@test.com" }
                  };
             if (!userManager.Users.Any())
             {
