@@ -5,7 +5,7 @@ import 'react-calendar/dist/Calendar.css'; // Import the CSS for the calendar
 
 export default function ActivityFilters() {
   return (
-    <Box sx={{ display: "flex",flexDirection: "column", gap: 3, borderRadius:3 }}>
+    <Box sx={{ position: "sticky", top: '7rem', alignSelf: "flex-start", display : 'flex', flexDirection: "column", gap: 3, borderRadius:3 }}>
         <Paper sx={{ padding: 3, borderRadius:3, backgroundColor: "#f5f5f5" }}>
         <Box sx={{width:'100%',}}>
             <Typography variant="h5" sx={{ fontWeight: "bold", mb:1, alignItems: "center", display: "flex", gap: 1, color: "primary.main" }}>

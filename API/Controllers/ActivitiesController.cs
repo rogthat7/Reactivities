@@ -1,6 +1,7 @@
 using Application.Activities;
 using Application.Activities.Commands;
 using Application.Activities.DTOs;
+using Application.Core;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,9 @@ namespace API.Controllers
     public class ActivitiesController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<ActivityDto>>> GetActivities()
+        public async Task<ActionResult<PagedList<ActivityDto,DateTime?>>> GetActivities(DateTime? cursor)
         {
-            var res =  await Mediator.Send(new List.Query());
-            return Ok(res);
+            return HandleResult(await Mediator.Send(new List.Query{Cursor = cursor}));
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<ActivityDto>> GetActivity(Guid id)

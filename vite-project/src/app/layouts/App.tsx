@@ -16,7 +16,7 @@ function App() {
         ) : (
           <>
           <NavBar />
-          <Container maxWidth="xl" sx={{ flexGrow: 1, padding: '2rem', bgcolor: '#f5f5f5' }}>
+          <Container maxWidth="xl" sx={{ flexGrow: 1, padding: '5rem', bgcolor: '#f5f5f5' }}>
             <Outlet />
           </Container>
           </>
