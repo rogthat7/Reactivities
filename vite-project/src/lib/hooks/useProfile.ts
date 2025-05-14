@@ -2,10 +2,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../types/api/agent";
 import { Profile } from "../../app/models/Types/profile";
 import { Photo } from "../../app/models/Types/photo";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { User } from "../types/User";
+import { UserActivity } from "../../app/models/Types/userActivity";
 
 export const useProfile = (id?: string, predicate?:string) => {
+    const [filter, setFilter] = useState<string | null>(null);
     const queryClient = useQueryClient();
     const {data: profile, isLoading: isLoadingProfile} = useQuery({
         queryKey: ['profile', id],
@@ -15,6 +17,7 @@ export const useProfile = (id?: string, predicate?:string) => {
         },
         enabled: !!id && !predicate,
     });
+
     const {data: photos, isLoading : isLoadingPhoto} = useQuery<Photo[]>({
         queryKey: ['photos', id],
         queryFn: async () => {
@@ -23,6 +26,8 @@ export const useProfile = (id?: string, predicate?:string) => {
         },
         enabled: !!id,
     });
+
+
     const updateFollowing = useMutation({
         mutationFn: async () => {
             await agent.post(`/profiles/${id}/follow`);
@@ -58,6 +63,14 @@ export const useProfile = (id?: string, predicate?:string) => {
         },
         enabled: !!id && !!predicate,
     })
+    const { data: userActivities, isLoading: isLoadingUserActivities } = useQuery<UserActivity[]>({
+        queryKey: ['user-activities', id, filter],
+        queryFn: async () => {
+            const response = await agent.get<UserActivity[]>(`/profiles/${id}/activities`, {params: {filter}});
+            return response.data;
+        },
+        enabled: !!id && !!filter,
+    });
     const uploadPhoto = useMutation({
         mutationFn: async (file: Blob) => {
             const formData = new FormData();
@@ -166,5 +179,8 @@ export const useProfile = (id?: string, predicate?:string) => {
         , updateFollowing
         , followings
         , loadingFollowings
+        , userActivities
+        , isLoadingUserActivities
+        , setFilter
     };
 }

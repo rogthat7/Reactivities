@@ -1,0 +1,1 @@
+export type UserActivity = { id: string; date: Date; title: string, category:string }; 
