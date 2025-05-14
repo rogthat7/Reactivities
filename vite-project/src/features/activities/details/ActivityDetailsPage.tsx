@@ -1,6 +1,6 @@
 
 import { Grid, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import ActivityDetailsHeader from "./ActivityDetailsHeader";
 import ActivityDetailsInfo from "./ActivityDetailsInfo";
 import ActivityDetailsChat from "./ActivityDetailsChat";

@@ -13,7 +13,7 @@ export default function ProfileActivitiesMenu() {
   const {userActivities, isLoadingUserActivities, setFilter  } = useProfile(id);
 
   const [value, setValue] = React.useState('future');
-    const handleChange = (event: any, newValue: React.SetStateAction<string>) => {
+    const handleChange = (_event: any, newValue: React.SetStateAction<string>) => {
       setValue(newValue);
       setFilter(newValue as string | null);
     };

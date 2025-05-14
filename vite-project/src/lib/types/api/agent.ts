@@ -18,7 +18,7 @@ agent.interceptors.response.use(
     switch (response.status) {
       case 200:
       case 201:
-        await delay(1000); // Simulate a delay of 1 second
+        if(import.meta.env.DEV)  await delay(1000); // Simulate a delay of 1 second
         store.UIStore.isIdle(); // Stop loading
         return response;
       case 204:
@@ -28,7 +28,8 @@ agent.interceptors.response.use(
         return Promise.reject(response.data);
     }
   },
-  (error) => {
+  async (error) => {
+    if(import.meta.env.DEV)  await delay(1000); // Simulate a delay of 1 second
     const status = error.response?.status;
     const data = error.response?.data;
     switch (status) {

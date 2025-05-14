@@ -31,7 +31,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options => {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1");
-        options.OAuthUseBasicAuthenticationWithAccessCodeGrant(); // Enable basic authentication
     });
 }
 
@@ -41,9 +40,14 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>(); //api/login
 app.MapHub<CommentHub>("/comments"); // SignalR hub for comments
+
+app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

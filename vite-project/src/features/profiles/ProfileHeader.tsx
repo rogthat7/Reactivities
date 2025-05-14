@@ -1,5 +1,4 @@
 import { Avatar, Box, Button, Chip, Divider, Grid, Paper, Stack, Typography } from "@mui/material";
-import { Profile } from "../../app/models/Types/profile";
 import { useParams } from "react-router";
 import { useProfile } from "../../lib/hooks/useProfile";
 export default function ProfileHeader() {

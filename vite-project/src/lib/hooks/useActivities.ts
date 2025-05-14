@@ -10,6 +10,7 @@ import { Activity } from "../../app/models/Types/activity";
 import { useAccount } from "./useAccount";
 import { PagedList } from "../../app/models/Types/pagedList";
 import { useStore } from "./useStore";
+import { ActivitySchema } from "../schemas/activitySchema";
 
 export const useActivities = (id?: string) => {
   const queryClient = useQueryClient();
@@ -39,7 +40,6 @@ export const useActivities = (id?: string) => {
       );
       return response.data;
     },
-    staleTime: 1000 * 60 * 5,
     keepPreviousData: true,
     enabled: !id && location.pathname === "/activities" && !!currentUser,
 
@@ -81,7 +81,7 @@ export const useActivities = (id?: string) => {
     },
   });
   const createActivity = useMutation({
-    mutationFn: async (activity: Activity) => {
+    mutationFn: async (activity: ActivitySchema) => {
       const response = await agent.post<Activity>("/activities", activity);
 
       return response.data;

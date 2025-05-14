@@ -6,7 +6,7 @@ import { useActivities } from "../../../lib/hooks/useActivities";
 import ThemedButton from "../../../app/shared/components/ThemedButton";
 
 type Props = {
-    activity?: Activity; // Replace with the actual type of your activity object
+    activity?: Activity; 
 }
 
 export default function ActivityDetailsHeader( { activity }: Props) {

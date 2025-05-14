@@ -1,4 +1,4 @@
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { useProfile } from "../../../lib/hooks/useProfile";
 import { profileSchema, ProfileSchema } from "../../../lib/schemas/profileSchema";
@@ -34,7 +34,11 @@ export default function ProfileEditForm( { setEditMode }: Props) {
     const onSubmit = (profileData : ProfileSchema) => {
             try{
                 if (profileData) {
-                    const updatedProfile = { ...profile, ...profileData };
+                    if (!profile?.id) {
+                        console.error("Profile ID is missing");
+                        return;
+                    }
+                    const updatedProfile = { ...profile, ...profileData, id: profile.id };
                     editProfile.mutate(updatedProfile, {
                         onSuccess : () => {
                             setEditMode(false); // Close the edit profile form after successful update

@@ -10,6 +10,7 @@ import {
   Grid,
 } from "@mui/material";
 import { Activity } from "../../../app/models/Types/activity";
+import { Link } from "react-router";
 
 type Props = {
   activity?: Activity; // Replace with the actual type of your activity object
@@ -38,7 +39,7 @@ export default function ActivityDetailsSidebar({ activity }: Props) {
           <Grid key={attendee.id} container alignItems="center">
             <Grid size={8}>
               <List sx={{ display: "flex", flexDirection: "column" }}>
-                <ListItem>
+                <ListItem component={Link} to={`/profiles/${attendee.id}`}>
                   <ListItemAvatar>
                     <Avatar
                       variant="rounded"

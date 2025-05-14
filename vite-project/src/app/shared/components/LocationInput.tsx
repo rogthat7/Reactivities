@@ -3,7 +3,7 @@ import { FieldValues, useController, UseControllerProps } from "react-hook-form"
 import { useEffect, useMemo, useState } from "react";
 import { List } from "semantic-ui-react";
 import axios from "axios";
-import { LocationIQSuggestion } from "../../lib/types/LocationIQSuggestion";
+import { LocationIQSuggestion } from "../../../lib/types/LocationIQSuggestion";
 
 type Props<T extends FieldValues> = {
     label : string;
