@@ -27,6 +27,7 @@
     "leaflet": "^1.9.4",
     "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0",
+    "npm": "^11.3.0",
     "react": "^19.1.0",
     "react-calendar": "^5.1.0",
     "react-cropper": "^2.3.3",
