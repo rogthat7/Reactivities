@@ -51,7 +51,7 @@ export default function ProfilePhotos() {
       {editMode ? (
         <PhotoUploadWidget
           uploadPhoto={handleUploadPhoto}
-          loading={uploadPhoto.isLoading}
+          loading={uploadPhoto.isPending}
         />
       ) : (
         <>

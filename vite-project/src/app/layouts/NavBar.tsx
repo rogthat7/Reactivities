@@ -12,7 +12,7 @@ import MenuItemLink from "../shared/components/MenuItemLink";
 import { Observer } from "mobx-react-lite";
 import { useStore } from "../../lib/hooks/useStore";
 import { useAccount } from "../../lib/hooks/useAccount";
-import UserMenu from "./UserMenu";
+import { UserMenu } from "./UserMenu";
 export default function NavBar() {
   const { currentUser } = useAccount();
   const { UIStore } = useStore(); // Create an instance of UIStore

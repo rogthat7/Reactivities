@@ -1,7 +1,6 @@
-import { Box, Card, CardMedia, Grid, Typography } from "@mui/material";
+import { Box, Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { UserActivity } from "../../app/models/Types/userActivity";
 import { Link } from "react-router";
-import { CardContent } from "semantic-ui-react";
 import { format } from "date-fns";
 
 type Props = {

@@ -3,13 +3,12 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
-import { Avatar, Box, ListItemIcon, ListItemText } from '@mui/material';
+import { Avatar, Box, Divider, ListItemIcon, ListItemText } from '@mui/material';
 import { useAccount } from '../../lib/hooks/useAccount';
 import { Link } from 'react-router';
 import { Add, Logout, Person } from '@mui/icons-material';
-import { Divider } from 'semantic-ui-react';
 
-export default function UserMenu() {
+export function UserMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -86,7 +86,7 @@ export default function ProfileEditForm( { setEditMode }: Props) {
                             variant="contained"
                             color="primary"
                             type="submit"
-                            disabled={editProfile.isLoading || profile?.displayName === displayNameValue && profile?.bio === bioValue}
+                            disabled={editProfile.isPending || profile?.displayName === displayNameValue && profile?.bio === bioValue}
                         >
                             Update Profile
                         </Button>

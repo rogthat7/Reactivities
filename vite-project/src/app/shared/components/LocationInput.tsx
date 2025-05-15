@@ -1,7 +1,6 @@
-import { Box, debounce, ListItemButton, TextField, Typography } from "@mui/material";
+import { Box, debounce, List, ListItemButton, TextField, Typography } from "@mui/material";
 import { FieldValues, useController, UseControllerProps } from "react-hook-form";
 import { useEffect, useMemo, useState } from "react";
-import { List } from "semantic-ui-react";
 import axios from "axios";
 import { LocationIQSuggestion } from "../../../lib/types/LocationIQSuggestion";
 

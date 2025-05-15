@@ -56,7 +56,7 @@ export default function ActivityDetailsHeader( { activity }: Props) {
                             variant='contained'
                             color={activity?.isCancelled ? 'success' : 'error'}
                             onClick={() => activity?.id && updateAttendance.mutate(activity.id)}
-                            disabled={updateAttendance.isLoading}
+                            disabled={updateAttendance.isPending || activity?.isCancelled}
                         >
                           <Typography>{activity?.isCancelled ? 'Re-activate Activity' : 'Cancel Activity'}</Typography>  
                         </ThemedButton>
@@ -75,7 +75,7 @@ export default function ActivityDetailsHeader( { activity }: Props) {
                         variant="contained"
                         color={activity?.isGoing ? 'primary' : 'info'}
                         onClick={() => activity?.id && updateAttendance.mutate(activity.id)}
-                        disabled={updateAttendance.isLoading || activity?.isCancelled}
+                        disabled={updateAttendance.isPending || activity?.isCancelled}
                     >
                         {activity?.isGoing ? 'Cancel Attendance' : 'Join Activity'}
                     </ThemedButton>

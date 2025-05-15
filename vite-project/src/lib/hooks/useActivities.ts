@@ -25,7 +25,7 @@ export const useActivities = (id?: string) => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<PagedList<Activity, string>>({
-    queryKey: ["activities",filter, startDate],
+    queryKey: ["activities", filter, startDate],
     queryFn: async ({ pageParam = null }) => {
       const response = await agent.get<PagedList<Activity, string>>(
         "/activities",
@@ -34,13 +34,15 @@ export const useActivities = (id?: string) => {
             cursor: pageParam,
             pageSize: 3,
             filter,
-            startDate
+            startDate,
           },
         }
       );
       return response.data;
     },
-    keepPreviousData: true,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    getPreviousPageParam: (firstPage) => firstPage.nextCursor,
+    initialPageParam: null,
     enabled: !id && location.pathname === "/activities" && !!currentUser,
 
     select: (data) => ({
@@ -60,7 +62,7 @@ export const useActivities = (id?: string) => {
     }),
   });
 
-  const { data: activity, isLoading: isLoadingActivity } = useQuery({
+  const { data: activity , isLoading: isLoadingActivity } = useQuery<Activity>({
     queryKey: ["activities", id],
     queryFn: async () => {
       const response = await agent.get<Activity>(`/activities/${id}`);
@@ -75,9 +77,6 @@ export const useActivities = (id?: string) => {
         isGoing: data.attendees.some((x) => x.id === currentUser?.id),
         hostImageUrl: host?.imageUrl,
       };
-    },
-    onError: (error) => {
-      console.error("Error fetching activity:", error);
     },
   });
   const createActivity = useMutation({
