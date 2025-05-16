@@ -34,7 +34,12 @@ agent.interceptors.response.use(
     const data = error.response?.data;
     switch (status) {
       case 401: {
-        toast.error("Unauthorised");
+        if(data.detail === 'NotAllowed'){
+          throw new Error(data.detail);
+        }
+        else {
+          toast.error("Unauthorized");
+        }
         store.UIStore.isIdle();
         break;
       }
