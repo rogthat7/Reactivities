@@ -6,6 +6,7 @@ using Application.Activities.DTOs;
 using Application.Profiles.DTOs;
 using AutoMapper;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Core
 {
@@ -15,6 +16,7 @@ namespace Application.Core
         {
             string? currentUserId = null;
             CreateMap<Activity, Activity>();
+            CreateMap<User, IdentityUser>();
             CreateMap<CreateActivityDto, Activity>();
             CreateMap<EditActivityDto, Activity>();
             CreateMap<Activity, ActivityDto>()

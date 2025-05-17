@@ -3,16 +3,20 @@ using Application.Activities;
 using Application.Activities.Validators;
 using Application.Core;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation;
+using Infrastructure.Email;
 using Infrastructure.Photos;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using Resend;
 
 namespace API.Extensions
 {
@@ -68,9 +72,11 @@ namespace API.Extensions
                     cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly);
                 }
             );
+            
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            
             services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
             services.AddTransient<ExceptionMiddleware>();
             services.AddIdentityApiEndpoints<User>(opt =>
@@ -79,6 +85,22 @@ namespace API.Extensions
             })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<DataContext>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = true;
+            });
+
+            // Configure Resend
+            services.AddOptions();
+            services.AddHttpClient<ResendClient>();
+            services.Configure<ResendClientOptions>(opt => {
+                opt.ApiToken = config["Resend:ApiToken"];
+                });
+            services.AddTransient<IResend, ResendClient>();
+            services.AddTransient<IEmailSender<User>, EmailSender>();
+            
+
+
             services.AddAuthorization(opt =>
             {
                 opt.AddPolicy("IsActivityHost", policy =>
