@@ -64,7 +64,7 @@ namespace API.Controllers
         {
             var code = await signInManager.UserManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));//Encoding.UTF8.GetBytes(code)
-            
+
             var confirmEmailUrl = $"{config["ClientAppUrl"]}/confirm-email?userId={user.Id}&code={code}";
             await emailSender.SendConfirmationLinkAsync(user, email, confirmEmailUrl);
         }
@@ -102,6 +102,24 @@ namespace API.Controllers
             return Ok(new { Message = "User logged out successfully" });
         }
 
+        [HttpPost("change-password")]
+        public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            var user = await signInManager.UserManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized(new { Message = "User not found" });
+            }
+            var result = await signInManager.UserManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword,changePasswordDto.NewPassword );
+            if (result.Succeeded)
+            {
+                return Ok(new { Message = "Password changed successfully" });
+            }
+            else
+            {
+                return BadRequest(result.Errors.First().Description);
+            }
+        }
     }
 
 }
