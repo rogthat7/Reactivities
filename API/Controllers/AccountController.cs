@@ -102,7 +102,7 @@ namespace API.Controllers
             return Ok(new { Message = "User logged out successfully" });
         }
 
-        [HttpPost("change-password")]
+        [HttpPut("change-password")]
         public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
         {
             var user = await signInManager.UserManager.GetUserAsync(User);

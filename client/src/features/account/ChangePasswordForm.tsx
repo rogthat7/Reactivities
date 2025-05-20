@@ -12,6 +12,14 @@ export default function ChangePasswordForm() {
             await changePassword.mutateAsync(data, {
                 onSuccess: () => {
                     toast.success('Password changed successfully');
+                },
+                onError(error) {
+                    if (Array.isArray(error)) {
+                        error.forEach((err) => {
+                            if (err.includes("Password"))
+                                toast.error(err);
+                        });
+                    }
                 }
             });
         } catch (error) {

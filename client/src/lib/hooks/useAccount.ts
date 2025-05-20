@@ -62,7 +62,10 @@ export const useAccount = () =>{
 
     const changePassword = useMutation({
         mutationFn: async (data : ChangePasswordSchema) => {
-            await agent.put('/account/change-password', data);
+            await agent.put('/account/change-password', JSON.stringify({currentPassword: data.currentPassword,
+                newPassword: data.newPassword}), {
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
     })
 
