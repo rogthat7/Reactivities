@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Interfaces;
 using Application.Profiles.DTOs;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -19,22 +20,25 @@ namespace Application.Activities
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+            private readonly IUserAccessor _userAccessor;
+
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
                 _mapper = mapper;
+                _userAccessor = userAccessor;
                 _context = context;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var userProfile = await _context.Users.ProjectTo<UserProfile>(_mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync(x => x.Id.ToString() == request.EditProfileDto.UserId, cancellationToken: cancellationToken);
-                if (userProfile == null) return Result<Unit>.Failure("User Profile not found", StatusCodes.Status404NotFound);
-                
-                _mapper.Map(request.EditProfileDto, userProfile);
-                
+                var user = await _userAccessor.GetUserAsync();
+                user.DisplayName = request.EditProfileDto.DisplayName;
+                user.Bio = request.EditProfileDto.Bio;
+                _context.Entry(user).State = EntityState.Modified;
                 var result = await _context.SaveChangesAsync(cancellationToken) > 0;
-                return result ? Result<Unit>.Success(Unit.Value) : Result<Unit>.Failure("Failed to update profile", StatusCodes.Status400BadRequest);
+                return result
+                    ? Result<Unit>.Success(Unit.Value)
+                    : Result<Unit>.Failure("Failed to update profile", 400);
             }
         }
        

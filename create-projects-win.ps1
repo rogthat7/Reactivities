@@ -9,15 +9,20 @@ dotnet new webapi -n API --use-controllers
 dotnet new classlib -n Application
 dotnet new classlib -n Domain
 dotnet new classlib -n Persistence
+dotnet new classlib -n Infrastructure
 
 Write-Host "Adding projects to the solution" -ForegroundColor Green
 dotnet sln add API/API.csproj
 dotnet sln add Application/Application.csproj
 dotnet sln add Domain/Domain.csproj
 dotnet sln add Persistence/Persistence.csproj
+dotnet sln add Infrastructure/Infrastructure.csproj
 
 Write-Host "Adding project references" -ForegroundColor Green
 cd API
+dotnet add reference ../Application/Application.csproj
+dotnet add reference ../Infrastructure/Infrastructure.csproj
+cd ../Infrastructure
 dotnet add reference ../Application/Application.csproj
 cd ../Application
 dotnet add reference ../Domain/Domain.csproj

@@ -28,7 +28,7 @@ export default function ProfileEditForm( { setEditMode }: Props) {
     }
 
     useEffect(() => {
-        if (profile) reset({ ...profile })
+        if (profile) reset({ ...profile, bio: profile.bio ?? undefined })
         }, [profile, reset]);
 
     const onSubmit = (profileData : ProfileSchema) => {
